@@ -1,0 +1,43 @@
+from main import *
+from aiogram import types
+
+###Пользователь активирует и деактивирует объявления
+@dp.callback_query_handler(lambda call: 'stop_start_an_' in call.data)
+async def stop_start_an_rent_user(call: types.CallbackQuery):
+    db.update_my_announcements_rent(call.data.split('_')[-1], not db.start_my_announcements_rent(call.data.split('_')[-1]))
+    await call.message.edit_text(text="☑️")
+
+
+@dp.callback_query_handler(lambda call: 'stop_start_an_' in call.data)
+async def stop_start_an_sell_user(call: types.CallbackQuery):
+    db.update_my_announcements_sell(call.data.split('_')[-1], not db.start_my_announcements_sell(call.data.split('_')[-1]))
+    await call.message.edit_text(text="☑️")
+
+#Пользователь удаляет объявления
+
+@dp.callback_query_handler(lambda call: 'dell_an_' in call.data)
+async def user_an_sell_dell(call: types.CallbackQuery):
+    #пока не буду делать функцию удаления
+    await call.message.edit_text(text="☑️Удалено")
+
+######Админ удаляет объявления
+@dp.callback_query_handler(lambda call: 'admin_dell_an_' in call.data)
+async def admin_an_rent_dell(call: types.CallbackQuery):
+    db.dell_an_rent_admin(call.data.split('_')[-1])
+    await call.message.edit_text(text="☑️Отклонено")
+
+@dp.callback_query_handler(lambda call: 'admin_dell_an_' in call.data)
+async def admin_an_sell_dell(call: types.CallbackQuery):
+    db.dell_an_sell_admin(call.data.split('_')[-1])
+    await call.message.edit_text(text="☑️Отклонено")
+
+#######Админ одобряет объявления
+@dp.callback_query_handler(lambda call: 'admin_start_an_' in call.data)
+async def admin_start_an_sell(call: types.CallbackQuery):
+    db.confirm_announcements_sell_admin(call.data.split('_')[-1])
+    await call.message.edit_text(text="☑️Одобрено️")
+
+@dp.callback_query_handler(lambda call: 'admin_start_an_' in call.data)
+async def admin_start_an_rent(call: types.CallbackQuery):
+    db.confirm_announcements_rent_admin(call.data.split('_')[-1])
+    await call.message.edit_text(text="☑️Одобрено")
