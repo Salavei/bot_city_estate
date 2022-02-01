@@ -1,6 +1,5 @@
 from main import *
 from aiogram.dispatcher.filters.builtin import CommandStart
-from keyboards.default.markup import keyboard
 from utils.funk_async import *
 
 
@@ -27,9 +26,9 @@ async def command_start_text(message: types.Message):
         'Политика конфеденциальности': konfendentsialnost,
         'Правила размещения': rule,
         'Сроки размещения': term,
-        'DELL/UP': dell_up,
+        'Создать объявление': dell_up,
         '🔙': bot_start,
-        'Создать объявление': show_all_my_rent,
+
     }
     data_admin = {
         'Подтверждение Продажи': confirmation_of_sales,

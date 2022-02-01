@@ -1,6 +1,14 @@
 from main import *
 from aiogram import types
 
+
+###Оставить заявку на объявлении
+
+@dp.callback_query_handler(lambda call: 'requests_an_' in call.data)
+async def requests_an_user(call: types.CallbackQuery):
+    #тут будет то, куда будет идти заявка
+    await call.message.answer(text="Заявка отправлена")
+
 ###Пользователь активирует и деактивирует объявления
 @dp.callback_query_handler(lambda call: 'stop_start_an_' in call.data)
 async def stop_start_an_rent_user(call: types.CallbackQuery):

@@ -6,7 +6,7 @@ btn_rule_konfendentsialnost = KeyboardButton("Правила размещени�
 btn_konfendentsialnost = KeyboardButton("Политика конфеденциальности")
 btn_rule = KeyboardButton("Правила размещения")
 btn_term = KeyboardButton("Сроки размещения")
-btn_dell_up = KeyboardButton("DELL/UP")
+btn_dell_up = KeyboardButton("Создать объявление")
 btn_back = KeyboardButton("🔙")
 
 keyboard_rule_konfendentsialnost = types.ReplyKeyboardMarkup(resize_keyboard=True)

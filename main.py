@@ -15,5 +15,7 @@ dp = Dispatcher(bot, storage=storage)
 
 if __name__ == '__main__':
     from handlers.users.app import dp
+    from fsm.fsm import dp
+    from handlers.callback.callback_handler import dp
     print('Start bot...')
     executor.start_polling(dp, skip_updates=True)

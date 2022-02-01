@@ -10,8 +10,8 @@ class SQLestate:
 
     # SQL ANNOUNCEMENTS ONLY
 
-    def add_announcements_rent(self, price, number_of_rooms, street, rent_description, phone, placed, photo,
-                               date_time, tg_id, allow=True, allow_admin=False):
+    def add_announcements_rent(self, price, number_of_rooms, street, rent_description, phone, photo,
+                               date_time, tg_id, placed, allow=True, allow_admin=True):
         """Добавляем обьявление аренды"""
         with self.connection:
             return self.cursor.execute(
@@ -20,8 +20,8 @@ class SQLestate:
                 (price, number_of_rooms, street, rent_description, phone, placed, photo,
                  date_time, allow, allow_admin, tg_id))
 
-    def add_announcements_sell(self, price, number_of_rooms, street, rent_description, phone, placed, photo,
-                               date_time, tg_id, allow=True, allow_admin=False):
+    def add_announcements_sell(self, price, number_of_rooms, street, rent_description, phone, photo,
+                               date_time, tg_id, placed, allow=True, allow_admin=True):
         """Добавляем обьявление продажи"""
         with self.connection:
             return self.cursor.execute(
