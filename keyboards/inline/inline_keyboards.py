@@ -1,6 +1,21 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
+async def keyboards_announcements_rent(id_an, allow) -> InlineKeyboardMarkup:
+    """Остановка/Активация и Удаления объявлений для пользователя"""
+    keyboard = InlineKeyboardMarkup(
+        row_width=2,
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(f'{allow}', callback_data=f'rent_stop_start_an_{id_an}'),
+                InlineKeyboardButton('❌ Удалить', callback_data=f'rent_dell_an_{id_an}'),
+            ]
+        ]
+    )
+    return keyboard
+
+
+
 async def keyboards_announcements(id_an, allow) -> InlineKeyboardMarkup:
     """Остановка/Активация и Удаления объявлений для пользователя"""
     keyboard = InlineKeyboardMarkup(

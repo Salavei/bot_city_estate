@@ -10,15 +10,17 @@ async def requests_an_user(call: types.CallbackQuery):
     await call.message.answer(text="Заявка отправлена")
 
 ###Пользователь активирует и деактивирует объявления
-@dp.callback_query_handler(lambda call: 'stop_start_an_' in call.data)
+@dp.callback_query_handler(lambda call: 'rent_stop_start_an_' in call.data)
 async def stop_start_an_rent_user(call: types.CallbackQuery):
-    db.update_my_announcements_rent(call.data.split('_')[-1], not db.start_my_announcements_rent(call.data.split('_')[-1]))
+    print(call.data.split('_')[-1])
+    db.confirm_announcements_rent_user(call.data.split('_')[-1], not db.start_my_announcements_rent(call.data.split('_')[-1]))
     await call.message.edit_text(text="☑️")
 
 
 @dp.callback_query_handler(lambda call: 'stop_start_an_' in call.data)
 async def stop_start_an_sell_user(call: types.CallbackQuery):
-    db.update_my_announcements_sell(call.data.split('_')[-1], not db.start_my_announcements_sell(call.data.split('_')[-1]))
+    print(call.data.split('_')[-1])
+    db.confirm_announcements_sell_user(call.data.split('_')[-1], not db.start_my_announcements_sell(call.data.split('_')[-1]))
     await call.message.edit_text(text="☑️")
 
 #Пользователь удаляет объявления

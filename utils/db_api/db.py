@@ -65,11 +65,36 @@ class SQLestate:
             result = self.cursor.execute('SELECT * FROM `users`', ).fetchall()
             return len(result)
 
+    def start_my_announcements_rent(self, id):
+        """Проверяем, на запуск аренды"""
+        with self.connection:
+            return self.cursor.execute('SELECT `allow` FROM `announcements_rent` WHERE `id` = ?', (id,)).fetchone()[0]
+
+
+    def start_my_announcements_sell(self, id):
+        """Проверяем, на запуск продажи"""
+        with self.connection:
+            return self.cursor.execute('SELECT `allow` FROM `announcements_sell` WHERE `id` = ?', (id,)).fetchone()[0]
+
+
     def add_subscriber(self, tg_id, admin=False):
         """Добавляем нового юзера"""
         with self.connection:
             return self.cursor.execute("INSERT INTO `users` (`id`,`tg_id`, `admin`) VALUES(?,?,?)",
                                        (int(self.subscriber_exists()) + 1, tg_id, admin))
+
+    def confirm_announcements_sell_user(self, id_conf, allow):
+        """Подтвердить объявление продажи как юзер"""
+        with self.connection:
+            return self.cursor.execute("UPDATE `announcements_sell` SET `allow_admin` = ?, `allow` = ? WHERE `id` =?",
+                                       (True, allow,id_conf))
+
+    def confirm_announcements_rent_user(self, id_conf, allow):
+        """Подтвердить объявление arend как юзер"""
+        with self.connection:
+            return self.cursor.execute("UPDATE `announcements_rent` SET `allow_admin` = ?, `allow` = ? WHERE `id` =?",
+                                       (True, allow,id_conf))
+
 
     def confirm_announcements_sell_admin(self, id_conf):
         """Подтвердить объявление продажи как админ"""

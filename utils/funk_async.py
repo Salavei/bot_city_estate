@@ -25,7 +25,7 @@ async def show_all_my_sell(message: types.Message):
             await bot.send_photo(message.from_user.id, photo=photo,
                                  caption=f'Цена: {price}\nКолличество комнат: {number_of_rooms}\nАдрес: {street}\nОписание: {rent_description}'
                                          f'\nНомер телефона: {phone}\nКто сдает: {data_placed.get(placed)}\nДата публикации: {str(date_time)[0:-7]}',
-                                 reply_markup=await requests_keyboards_announcements(id_an))
+                                 reply_markup=await keyboards_announcements(id_an, allow=data_allow.get(allow)))
     else:
         await message.answer(text='Вы еще не создали объявлений по продаже')
 
@@ -37,7 +37,7 @@ async def show_all_my_rent(message: types.Message):
             await bot.send_photo(message.from_user.id, photo=photo,
                                  caption=f'Стоимость аренды: {price}\nТип комнаты: {number_of_rooms}\nАдрес: {street}\nОписание: {rent_description}'
                                          f'\nНомер телефона: {phone}\nКто сдает: {data_placed.get(placed)}\nДата публикации: {str(date_time)[0:-7]}',
-                                 reply_markup=await requests_keyboards_announcements(id_an))
+                                 reply_markup=await keyboards_announcements_rent(id_an, allow=data_allow.get(allow)))
     else:
         await message.answer(text='Вы еще не создали объявлений по аренде')
 

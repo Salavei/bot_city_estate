@@ -18,12 +18,16 @@ keyboards_create = types.ReplyKeyboardMarkup(resize_keyboard=True)
 keyboards_create.add(btn_create_an, btn_back_create_an)
 # main_button
 btn_is_given = KeyboardButton("Сдается")
+
+btn_my_sell = KeyboardButton("Мои объявления продажи")
+btn_my_rent = KeyboardButton("Мои объявления аренды")
+
 btn_requisition_arend = KeyboardButton("Заявки на аренду")
 btn_sell = KeyboardButton("Продается")
 btn_requisition_buy = KeyboardButton("Заявки на покупку")
 
 keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-keyboard.add(btn_rule_konfendentsialnost, btn_is_given, btn_requisition_arend, btn_sell, btn_requisition_buy)
+keyboard.add(btn_rule_konfendentsialnost, btn_is_given, btn_my_sell, btn_my_rent, btn_requisition_arend, btn_sell, btn_requisition_buy)
 
 # Button_Admin
 btn_confirming_sell = KeyboardButton("Подтверждение Продажи")

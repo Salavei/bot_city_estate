@@ -22,6 +22,8 @@ async def command_start_text(message: types.Message):
         'Сдается': show_all_rent,
         'Заявки на аренду': rental_requests,
         'Продается': show_all_sell,
+        'Мои объявления продажи': show_all_my_sell,
+        'Мои объявления аренды': show_all_my_rent,
         'Заявки на покупку': purchasing_request,
         'Политика конфеденциальности': konfendentsialnost,
         'Правила размещения': rule,
