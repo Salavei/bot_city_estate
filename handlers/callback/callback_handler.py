@@ -25,11 +25,15 @@ async def stop_start_an_sell_user(call: types.CallbackQuery):
 
 #Пользователь удаляет объявления
 
-@dp.callback_query_handler(lambda call: 'dell_an_' in call.data)
-async def user_an_sell_dell(call: types.CallbackQuery):
-    #пока не буду делать функцию удаления
+@dp.callback_query_handler(lambda call: 'ddd_rent_dell_an_' in call.data)
+async def user_an_rent_dell(call: types.CallbackQuery):
+    db.dell_an_rent_user(call.data.split('_')[-1])
     await call.message.edit_text(text="☑️Удалено")
 
+@dp.callback_query_handler(lambda call: 'ssssssdell_an_' in call.data)
+async def user_an_sell_dell_sell(call: types.CallbackQuery):
+    db.dell_an_sell_user(call.data.split('_')[-1])
+    await call.message.edit_text(text="☑️Удалено")
 ######Админ удаляет объявления
 @dp.callback_query_handler(lambda call: 'dell_rent_admin_an_' in call.data)
 async def admin_an_rent_dell(call: types.CallbackQuery):

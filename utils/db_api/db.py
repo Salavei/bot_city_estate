@@ -18,7 +18,7 @@ class SQLestate:
                 "INSERT INTO `announcements_rent` (`price`,`number_of_rooms`,`street`,"
                 "`rent_description`,`phone`,`placed`, `photo`, `date_time`, `allow_admin`, `allow`, `tg_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                 (price, number_of_rooms, street, rent_description, phone, placed, photo,
-                 date_time, allow, allow_admin, tg_id))
+                 date_time, allow_admin, allow, tg_id))
 
     def add_announcements_sell(self, price, number_of_rooms, street, rent_description, phone, photo,
                                date_time, tg_id, placed, allow=True, allow_admin=False):
@@ -28,7 +28,7 @@ class SQLestate:
                 "INSERT INTO `announcements_sell` (`price`,`number_of_rooms`,`street`,"
                 "`rent_description`,`phone`,`placed`, `photo`, `date_time`, `allow_admin`, `allow`, `tg_id`) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
                 (price, number_of_rooms, street, rent_description, phone, placed, photo,
-                 date_time, allow, allow_admin, tg_id))
+                 date_time, allow_admin, allow, tg_id))
 
     def add_request_rent(self, id_an_rent, number_request, name_request):
         """Добавляем запрос аренды"""
@@ -90,6 +90,15 @@ class SQLestate:
         with self.connection:
             return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `id` = ?", (id_an,)).fetchall()
 
+    def dell_an_sell_user(self, an_id):
+        """Пользователь удаляет объявление продажи"""
+        with self.connection:
+            return self.cursor.execute("DELETE FROM `announcements_sell` WHERE `id` =?", (an_id))
+
+    def dell_an_rent_user(self, an_id):
+        """Пользователь удаляет объявление аренды"""
+        with self.connection:
+            return self.cursor.execute("DELETE FROM `announcements_rent` WHERE `id` =?", (an_id))
 
     # SQL USERS ONLY
 

@@ -8,7 +8,7 @@ async def keyboards_announcements_rent(id_an, allow) -> InlineKeyboardMarkup:
         inline_keyboard=[
             [
                 InlineKeyboardButton(f'{allow}', callback_data=f'rent_stop_start_an_{id_an}'),
-                InlineKeyboardButton('❌ Удалить', callback_data=f'rent_dell_an_{id_an}'),
+                InlineKeyboardButton('❌ Удалить', callback_data=f'ddd_rent_dell_an_{id_an}'),
             ]
         ]
     )
@@ -23,7 +23,7 @@ async def keyboards_announcements(id_an, allow) -> InlineKeyboardMarkup:
         inline_keyboard=[
             [
                 InlineKeyboardButton(f'{allow}', callback_data=f'stop_start_an_{id_an}'),
-                InlineKeyboardButton('❌ Удалить', callback_data=f'dell_an_{id_an}'),
+                InlineKeyboardButton('❌ Удалить', callback_data=f'ssssssdell_an_{id_an}'),
             ]
         ]
     )

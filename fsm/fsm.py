@@ -148,7 +148,7 @@ async def write_placed(call: types.CallbackQuery, state: FSMContext):
     }
     async with state.proxy() as data:
         data['placed'] = choice.get(call.data)
-    await FSMrent.next()
+    await FSMsell.next()
     await call.message.answer('Загрузите фото квартиры:')
 
 
