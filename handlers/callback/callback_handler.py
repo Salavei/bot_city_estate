@@ -31,23 +31,25 @@ async def user_an_sell_dell(call: types.CallbackQuery):
     await call.message.edit_text(text="☑️Удалено")
 
 ######Админ удаляет объявления
-@dp.callback_query_handler(lambda call: 'admin_dell_an_' in call.data)
+@dp.callback_query_handler(lambda call: 'dell_rent_admin_an_' in call.data)
 async def admin_an_rent_dell(call: types.CallbackQuery):
     db.dell_an_rent_admin(call.data.split('_')[-1])
     await call.message.edit_text(text="☑️Отклонено")
 
-@dp.callback_query_handler(lambda call: 'admin_dell_an_' in call.data)
+@dp.callback_query_handler(lambda call: 'an_admin_dell_' in call.data)
 async def admin_an_sell_dell(call: types.CallbackQuery):
     db.dell_an_sell_admin(call.data.split('_')[-1])
     await call.message.edit_text(text="☑️Отклонено")
 
 #######Админ одобряет объявления
-@dp.callback_query_handler(lambda call: 'admin_start_an_' in call.data)
+@dp.callback_query_handler(lambda call: 'seeel_admin_start_an_' in call.data)
 async def admin_start_an_sell(call: types.CallbackQuery):
+    print('sell', call.data.split('_')[-1])
     db.confirm_announcements_sell_admin(call.data.split('_')[-1])
     await call.message.edit_text(text="☑️Одобрено️")
 
-@dp.callback_query_handler(lambda call: 'admin_start_an_' in call.data)
+@dp.callback_query_handler(lambda call: 'rent_admin_start_an_' in call.data)
 async def admin_start_an_rent(call: types.CallbackQuery):
+    print('rent', call.data.split('_')[-1])
     db.confirm_announcements_rent_admin(call.data.split('_')[-1])
     await call.message.edit_text(text="☑️Одобрено")

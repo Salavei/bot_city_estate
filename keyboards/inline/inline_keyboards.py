@@ -70,14 +70,27 @@ async def choice_seller(*args) -> InlineKeyboardMarkup:
 
 #admin keyboard
 
-async def admin_keyboards_announcements(id_an) -> InlineKeyboardMarkup:
+async def rent_admin_keyboards_announcements(id_an) -> InlineKeyboardMarkup:
     """Одобрить и Отклонить объявления для админа"""
     keyboard = InlineKeyboardMarkup(
         row_width=2,
         inline_keyboard=[
             [
-                InlineKeyboardButton(f'✅ Одобрить', callback_data=f'admin_start_an_{id_an}'),
-                InlineKeyboardButton('❌ Отклонить', callback_data=f'admin_dell_an_{id_an}'),
+                InlineKeyboardButton(f'✅ Одобрить', callback_data=f'rent_admin_start_an_{id_an}'),
+                InlineKeyboardButton('❌ Отклонить', callback_data=f'dell_rent_admin_an_{id_an}'),
+            ]
+        ]
+    )
+    return keyboard
+
+async def sell_admin_keyboards_announcements(id_an) -> InlineKeyboardMarkup:
+    """Одобрить и Отклонить объявления для админа"""
+    keyboard = InlineKeyboardMarkup(
+        row_width=2,
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(f'✅ Одобрить', callback_data=f'seeel_admin_start_an_{id_an}'),
+                InlineKeyboardButton('❌ Отклонить', callback_data=f'an_admin_dell_{id_an}'),
             ]
         ]
     )

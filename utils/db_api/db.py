@@ -109,17 +109,37 @@ class SQLestate:
                                        (True, id_conf))
 
 
-
-
     def dell_an_rent_admin(self, an_id):
         """Добавляем нового юзера"""
         with self.connection:
-            return self.cursor.execute("DELETE FROM `announcements_rent` WHERE `id` =? VALUES(?)", (an_id))
+            return self.cursor.execute("DELETE FROM `announcements_rent` WHERE `id` =?", (an_id))
 
     def dell_an_sell_admin(self, an_id):
         """Добавляем нового юзера"""
         with self.connection:
-            return self.cursor.execute("DELETE FROM `announcements_sell` WHERE `id` =? VALUES(?)", (an_id))
+            return self.cursor.execute("DELETE FROM `announcements_sell` WHERE `id` =?", (an_id))
+
+    def why_get_admin(self, user_id) -> bool:
+        """Проверка на админку"""
+        with self.connection:
+            return self.cursor.execute("SELECT `admin` FROM `users` WHERE `tg_id` =?", (user_id,)).fetchone()[0]
+
+    def get_admin(self, user_id, allow_admin) -> list:
+        """Выдача админки"""
+        with self.connection:
+            return self.cursor.execute("UPDATE `users` SET `admin` = ? WHERE `tg_id` =?", (allow_admin, user_id))
+
+    def admin_all_announcements_rent(self, ):
+        """Показать все объявления по аренде для админа"""
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `announcements_rent` WHERE `allow_admin` = ? and `allow` = ?",
+                                       (False, True,)).fetchall()
+
+    def admin_all_announcements_sell(self, ):
+        """Показать все объявления по продаже для админа"""
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `allow_admin` = ? and `allow` = ?",
+                                       (False, True,)).fetchall()
 
     def close(self):
         """Закрываем соединение с БД"""

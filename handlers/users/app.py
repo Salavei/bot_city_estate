@@ -1,7 +1,28 @@
 from main import *
 from aiogram.dispatcher.filters.builtin import CommandStart
 from utils.funk_async import *
+from filter.admin import IsAdmin
 
+#admin
+
+
+
+@dp.message_handler(commands=['admin'])
+async def command_start(message: types.Message):
+    if not await IsAdmin().check(message):
+        if not db.why_get_admin(message.from_user.id):
+            db.get_admin(message.from_user.id, True)
+            await message.answer('⚠️ Вход в админ режим ⚠️', reply_markup=keyboard_admin)
+        else:
+            db.get_admin(message.from_user.id, False)
+            await message.answer('❌ Выход из админ режима ❌', reply_markup=keyboard)
+    else:
+        db.get_admin(message.from_user.id, False)
+        await message.answer('❌ Вы не админ, команда не будет работать ❌', reply_markup=keyboard)
+
+
+
+#end admin
 
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):

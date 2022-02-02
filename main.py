@@ -13,6 +13,8 @@ storage = MemoryStorage()
 bot = Bot(token=env('TOKEN'))
 dp = Dispatcher(bot, storage=storage)
 
+admin_id = env('admin_id')
+
 if __name__ == '__main__':
     from handlers.users.app import dp
     from fsm.fsm import dp
