@@ -30,6 +30,34 @@ class SQLestate:
                 (price, number_of_rooms, street, rent_description, phone, placed, photo,
                  date_time, allow, allow_admin, tg_id))
 
+    def add_request_rent(self, id_an_rent, number_request, name_request):
+        """Добавляем запрос аренды"""
+        with self.connection:
+            return self.cursor.execute(
+                "INSERT INTO `request_rent` (`id_an_rent`,`number_request`,`name_request`) VALUES(?,?,?)",
+                (id_an_rent, number_request, name_request))
+
+    def add_request_sell(self, id_an_sell, number_request, name_request):
+        """Добавляем запрос продажи"""
+        with self.connection:
+            return self.cursor.execute(
+                "INSERT INTO `request_sell` (`id_an_sell`,`number_request`,`name_request`) VALUES(?,?,?)",
+                (id_an_sell, number_request, name_request))
+
+    def show_request_sell(self, id_an_rent):
+        """показывает запрос продажи"""
+        with self.connection:
+            return self.cursor.execute(
+                "SELECT `number_request`, `name_request`,`id_an_sell` FROM `request_sell` WHERE `id_an_sell` IN (SELECT `id` FROM `announcements_sell` WHERE `tg_id` =? )",
+                (int(id_an_rent),)).fetchall()
+
+    def show_request_rent(self, id_an_rent):
+        """показывает запрос аренды"""
+        with self.connection:
+            return self.cursor.execute(
+                "SELECT `number_request`, `name_request`,`id_an_rent` FROM `request_rent` WHERE `id_an_rent` IN (SELECT `id` FROM `announcements_rent` WHERE `tg_id` =? )",
+                (int(id_an_rent),)).fetchall()
+
     def show_all_announcements_sell(self, ):
         """Показать все объявления по продаже"""
         with self.connection:
@@ -45,12 +73,13 @@ class SQLestate:
     def show_all_my_announcements_rent(self, tg_id):
         """Показать все объявления по аренде"""
         with self.connection:
-            return self.cursor.execute("SELECT * FROM `announcements_rent` WHERE `tg_id` = ?",(tg_id,)).fetchall()
+            return self.cursor.execute("SELECT * FROM `announcements_rent` WHERE `tg_id` = ?", (tg_id,)).fetchall()
 
     def show_all_my_announcements_sell(self, tg_id):
         """Показать все объявления по аренде"""
         with self.connection:
-            return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `tg_id` = ?",(tg_id,)).fetchall()
+            return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `tg_id` = ?", (tg_id,)).fetchall()
+
     # SQL USERS ONLY
 
     def check_subscriber(self, tg_id):
@@ -70,12 +99,10 @@ class SQLestate:
         with self.connection:
             return self.cursor.execute('SELECT `allow` FROM `announcements_rent` WHERE `id` = ?', (id,)).fetchone()[0]
 
-
     def start_my_announcements_sell(self, id):
         """Проверяем, на запуск продажи"""
         with self.connection:
             return self.cursor.execute('SELECT `allow` FROM `announcements_sell` WHERE `id` = ?', (id,)).fetchone()[0]
-
 
     def add_subscriber(self, tg_id, admin=False):
         """Добавляем нового юзера"""
@@ -87,14 +114,13 @@ class SQLestate:
         """Подтвердить объявление продажи как юзер"""
         with self.connection:
             return self.cursor.execute("UPDATE `announcements_sell` SET `allow_admin` = ?, `allow` = ? WHERE `id` =?",
-                                       (True, allow,id_conf))
+                                       (True, allow, id_conf))
 
     def confirm_announcements_rent_user(self, id_conf, allow):
         """Подтвердить объявление arend как юзер"""
         with self.connection:
             return self.cursor.execute("UPDATE `announcements_rent` SET `allow_admin` = ?, `allow` = ? WHERE `id` =?",
-                                       (True, allow,id_conf))
-
+                                       (True, allow, id_conf))
 
     def confirm_announcements_sell_admin(self, id_conf):
         """Подтвердить объявление продажи как админ"""
@@ -107,7 +133,6 @@ class SQLestate:
         with self.connection:
             return self.cursor.execute("UPDATE `announcements_rent` SET `allow_admin` = ? WHERE `id` =?",
                                        (True, id_conf))
-
 
     def dell_an_rent_admin(self, an_id):
         """Добавляем нового юзера"""

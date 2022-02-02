@@ -66,12 +66,19 @@ async def show_all_sell(message: types.Message):
         await message.answer(text='Обьявлений на аренду нет')
 
 
-async def rental_requests(): pass
+async def rental_requests(message: types.Message):
+    if db.show_request_rent(message.from_user.id):
+        for unp in db.show_request_rent(message.from_user.id):
+            await message.answer(text=f'Имя: {unp[1]}\nНомер телефона: {unp[0]}\nОбъявление: {unp[2]}')
+    else:
+        await message.answer(text='Запросов не продажу нет')
 
-
-async def purchasing_request(): pass
-
-
+async def purchasing_request(message: types.Message):
+    if db.show_request_sell(message.from_user.id):
+        for unp in db.show_request_sell(message.from_user.id):
+            await message.answer(text=f'Имя: {unp[1]}\nНомер телефона: {unp[0]}\nОбъявление: {unp[2]}')
+    else:
+        await message.answer(text='Запросов не аренду нет')
 # second_user_funk
 
 async def konfendentsialnost(message: types.Message):

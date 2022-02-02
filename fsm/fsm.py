@@ -6,6 +6,77 @@ import datetime
 from keyboards.inline.inline_keyboards import *
 
 
+class FSMrequest_sell(StatesGroup):
+    name_request = State()
+    number_request = State()
+
+
+@dp.callback_query_handler(lambda c: 'soell_requests_an_' in c.data)
+async def request_sell_start(callback_query: types.CallbackQuery, state: FSMContext):
+    async with state.proxy() as data:
+        data['id_an_sell'] = callback_query.data.split('_')[-1]
+    await FSMrequest_sell.name_request.set()
+    await callback_query.message.edit_text('Введите Ваше имя:')
+
+
+@dp.message_handler(state=FSMrequest_sell.name_request)
+async def request_sell_load_name(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['name'] = message.text
+    await FSMrequest_sell.next()
+    await message.answer('☎️ Номер телефона:')
+
+
+@dp.message_handler(lambda message: not message.text[1:].isdigit(), state=FSMrequest_sell.number_request)
+async def request_sell_load_phone_invalid(message: types.Message):
+    return await message.reply("⚠️ Номер должен быть формата: +375297642930!!")
+
+
+@dp.message_handler(lambda message: message.text[1:].isdigit(), state=FSMrequest_sell.number_request)
+async def request_sell_load_phone(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['phone'] = message.text
+    await message.answer('✅ Заявка оставлена')
+    db.add_request_sell(data['id_an_sell'], data['phone'], data['name'])
+    await state.finish()
+
+
+
+
+class FSMrequest_rent(StatesGroup):
+    name_request = State()
+    number_request = State()
+
+
+@dp.callback_query_handler(lambda c: 'rient_requests_an_' in c.data)
+async def request_rent_start(callback_query: types.CallbackQuery, state: FSMContext):
+    async with state.proxy() as data:
+        data['id_an_rent'] = callback_query.data.split('_')[-1]
+    await FSMrequest_rent.name_request.set()
+    await callback_query.message.edit_text('Введите Ваше имя:')
+
+
+@dp.message_handler(state=FSMrequest_rent.name_request)
+async def request_rent_load_name(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['name'] = message.text
+    await FSMrequest_rent.next()
+    await message.answer('☎️ Номер телефона:')
+
+
+@dp.message_handler(lambda message: not message.text[1:].isdigit(), state=FSMrequest_rent.number_request)
+async def request_rent_load_phone_invalid(message: types.Message):
+    return await message.reply("⚠️ Номер должен быть формата: +375297642930!!")
+
+
+@dp.message_handler(lambda message: message.text[1:].isdigit(), state=FSMrequest_rent.number_request)
+async def request_rent_load_phone(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['phone'] = message.text
+    await message.answer('✅ Заявка оставлена')
+    db.add_request_rent(data['id_an_rent'], data['phone'], data['name'])
+    await state.finish()
+
 
 class FSMsell(StatesGroup):
     price = State()

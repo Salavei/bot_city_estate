@@ -31,12 +31,24 @@ async def keyboards_announcements(id_an, allow) -> InlineKeyboardMarkup:
 
 
 async def requests_keyboards_announcements(id_an) -> InlineKeyboardMarkup:
-    """Оставить заявку на объявлении"""
+    """Оставить заявку на объявлении аренды"""
     keyboard = InlineKeyboardMarkup(
         row_width=1,
         inline_keyboard=[
             [
-                InlineKeyboardButton(f'Оставить заявку', callback_data=f'requests_an_{id_an}'),
+                InlineKeyboardButton(f'Оставить заявку', callback_data=f'rient_requests_an_{id_an}'),
+            ]
+        ]
+    )
+    return keyboard
+
+async def sell_requests_keyboards_announcements(id_an) -> InlineKeyboardMarkup:
+    """Оставить заявку на объявлении продажи"""
+    keyboard = InlineKeyboardMarkup(
+        row_width=1,
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(f'Оставить заявку', callback_data=f'soell_requests_an_{id_an}'),
             ]
         ]
     )
