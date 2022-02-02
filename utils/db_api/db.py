@@ -11,7 +11,7 @@ class SQLestate:
     # SQL ANNOUNCEMENTS ONLY
 
     def add_announcements_rent(self, price, number_of_rooms, street, rent_description, phone, photo,
-                               date_time, tg_id, placed, allow=True, allow_admin=True):
+                               date_time, tg_id, placed, allow=True, allow_admin=False):
         """Добавляем обьявление аренды"""
         with self.connection:
             return self.cursor.execute(
@@ -21,7 +21,7 @@ class SQLestate:
                  date_time, allow, allow_admin, tg_id))
 
     def add_announcements_sell(self, price, number_of_rooms, street, rent_description, phone, photo,
-                               date_time, tg_id, placed, allow=True, allow_admin=True):
+                               date_time, tg_id, placed, allow=True, allow_admin=False):
         """Добавляем обьявление продажи"""
         with self.connection:
             return self.cursor.execute(
@@ -75,10 +75,21 @@ class SQLestate:
         with self.connection:
             return self.cursor.execute("SELECT * FROM `announcements_rent` WHERE `tg_id` = ?", (tg_id,)).fetchall()
 
+    def show_all_my_announcements_rent_request(self, id_an):
+        """Показать все объявления по аренде для запросов"""
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `announcements_rent` WHERE `id` = ?", (id_an,)).fetchall()
+
     def show_all_my_announcements_sell(self, tg_id):
-        """Показать все объявления по аренде"""
+        """Показать все объявления по продаже"""
         with self.connection:
             return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `tg_id` = ?", (tg_id,)).fetchall()
+
+    def show_all_my_announcements_sell_request(self, id_an):
+        """Показать все объявления по продаже для запросов"""
+        with self.connection:
+            return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `id` = ?", (id_an,)).fetchall()
+
 
     # SQL USERS ONLY
 

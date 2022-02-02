@@ -28,8 +28,8 @@ async def command_start(message: types.Message):
 async def bot_start(message: types.Message):
     if not db.check_subscriber(message.from_user.id):
         db.add_subscriber(message.from_user.id)
-    await message.answer(f'Привет, быстрее начни мной пользоваться!',
-                         reply_markup=keyboard)
+        await message.answer(f'Добро пожаловать!!', reply_markup=keyboard)
+    await message.answer(f'🔙🔙', reply_markup=keyboard)
 
 
 async def error(message: types.Message):

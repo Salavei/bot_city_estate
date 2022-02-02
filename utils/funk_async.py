@@ -51,7 +51,8 @@ async def show_all_rent(message: types.Message):
                                          f'\nНомер телефона: {phone}\nКто сдает: {data_placed.get(placed)}\nДата публикации: {str(date_time)[0:-7]}',
                                  reply_markup=await requests_keyboards_announcements(id_an))
     else:
-        await message.answer(text='Обьявлений на сдачу нет')
+        await message.answer(text='Обьявлений на аренду нет')
+
 
 
 async def show_all_sell(message: types.Message):
@@ -61,37 +62,41 @@ async def show_all_sell(message: types.Message):
             await message.answer_photo(photo=photo)
             await message.answer(text=f'Цена: {price}\nКолличество комнат: {number_of_rooms}\nАдрес: {street}\nОписание: {rent_description}'
                      f'\nНомер телефона: {phone}\nКто сдает: {data_placed.get(placed)}\nДата публикации: {str(date_time)[0:-7]}',
-                 reply_markup=await requests_keyboards_announcements(id_an))
+                 reply_markup=await sell_requests_keyboards_announcements(id_an))
     else:
-        await message.answer(text='Обьявлений на аренду нет')
+        await message.answer(text='Обьявлений на сдачу нет')
 
 
 async def rental_requests(message: types.Message):
     if db.show_request_rent(message.from_user.id):
         for unp in db.show_request_rent(message.from_user.id):
-            await message.answer(text=f'Имя: {unp[1]}\nНомер телефона: {unp[0]}\nОбъявление: {unp[2]}')
+            for un in db.show_all_my_announcements_rent_request(unp[2]):
+                await message.answer(text=f'📍Имя: {unp[1]}\nНомер телефона: {unp[0]}\n\nОбъявление:\n{un[3]}\n{un[4]}')
     else:
         await message.answer(text='Запросов не продажу нет')
 
 async def purchasing_request(message: types.Message):
     if db.show_request_sell(message.from_user.id):
         for unp in db.show_request_sell(message.from_user.id):
-            await message.answer(text=f'Имя: {unp[1]}\nНомер телефона: {unp[0]}\nОбъявление: {unp[2]}')
+            for un in db.show_all_my_announcements_sell_request(unp[2]):
+                await message.answer(text=f'📍Имя: {unp[1]}\nНомер телефона: {unp[0]}\n\nОбъявление:\n{un[3]}\n{un[4]}')
     else:
-        await message.answer(text='Запросов не аренду нет')
+        await message.answer(text='Запросов не продажу нет')
 # second_user_funk
 
 async def konfendentsialnost(message: types.Message):
-    await message.answer(text='Политики размещения и конфедициальность: Тут скоро будет текст')
+    with open('utils/konfendentsialnost', 'r', encoding='UTF-8') as term_text:
+        await message.answer(text=term_text.read())
 
 
 async def rule(message: types.Message):
-    await message.answer(
-        text='1)Размещать существующее 2)За публикуемые обьявления администрации не несет отвутственность')
+    with open('utils/rule', 'r', encoding='UTF-8') as term_text:
+        await message.answer(text=term_text.read())
 
 
 async def term(message: types.Message):
-    await message.answer(text='Сроки размещения зависят от администратора')
+    with open('utils/term', 'r', encoding='UTF-8') as term_text:
+        await message.answer(text=term_text.read())
 
 
 async def dell_up(message: types.Message):
