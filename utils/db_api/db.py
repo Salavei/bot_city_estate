@@ -30,14 +30,14 @@ class SQLestate:
                 (price, number_of_rooms, street, rent_description, phone, placed, photo,
                  date_time, allow_admin, allow, tg_id))
 
-    def add_request_rent(self, id_an_rent, number_request, name_request):
+    def add_request_rent(self, id_an_rent, name_request, number_request='+375232232323'):
         """Добавляем запрос аренды"""
         with self.connection:
             return self.cursor.execute(
                 "INSERT INTO `request_rent` (`id_an_rent`,`number_request`,`name_request`) VALUES(?,?,?)",
                 (id_an_rent, number_request, name_request))
 
-    def add_request_sell(self, id_an_sell, number_request, name_request):
+    def add_request_sell(self, id_an_sell, name_request, number_request='+375232232323'):
         """Добавляем запрос продажи"""
         with self.connection:
             return self.cursor.execute(
@@ -185,6 +185,14 @@ class SQLestate:
         with self.connection:
             return self.cursor.execute("SELECT * FROM `announcements_sell` WHERE `allow_admin` = ? and `allow` = ?",
                                        (False, True,)).fetchall()
+
+    def take_my_info(self, tg_id):
+        """
+        """
+        with self.connection:
+            result = self.cursor.execute('SELECT `tg_id` FROM `users` WHERE `tg_id` = ?',
+                                         (tg_id,)).fetchone()
+            return result
 
     def close(self):
         """Закрываем соединение с БД"""
